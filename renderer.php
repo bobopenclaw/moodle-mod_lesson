@@ -194,6 +194,22 @@ class mod_lesson_renderer extends plugin_renderer_base {
      * @return string
      */
     public function display_page(lesson $lesson, lesson_page $page, $attempt) {
+        // +++ MBS-HACK(mebis): design templates feature.
+        $tpl = \mod_lesson\local\template_manager::get_for_lesson($lesson->properties());
+        // Phase 1: only multichoice uses the new pipeline; 'default' keeps legacy markup.
+        if ($tpl->get('baseskin') !== 'default' && ($page instanceof \lesson_page_type_multichoice)) {
+            $renderable = new \mod_lesson\output\question_page($lesson, $page, $attempt, $this->page->cm->id);
+            // Trigger the question viewed event (normally done inside multichoice::display()).
+            $event = \mod_lesson\event\question_viewed::create([
+                'context' => \context_module::instance($this->page->cm->id),
+                'objectid' => $page->properties()->id,
+                'other' => ['pagetype' => $page->get_typestring()],
+            ]);
+            $event->trigger();
+            return $this->render_from_template('mod_lesson/pages/' . $tpl->get('baseskin') . '/question',
+                $renderable->export_for_template($this));
+        }
+        // --- MBS-HACK
         // We need to buffer here as there is an mforms display call
         ob_start();
         echo $page->display($this, $attempt);

@@ -1,0 +1,71 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_lesson/pages/card/question
+
+    Card design for a lesson question page.
+
+    Context variables required for this template:
+    * formaction - URL the answer form posts to (continue.php).
+    * sesskey - Session key for the form.
+    * qfmarkername - Hidden moodleform marker name expected by check_answer().
+    * cmid - Course module id.
+    * pageid - Lesson page id.
+    * contents - Formatted HTML question prompt.
+    * multiple - Whether multiple answers are allowed.
+    * answers - Array of { name, value, type, label, checked, disabled }.
+    * answercolumns - 1 or 2.
+    * palette - { primary, surface, text, accent }.
+    * submitlabel - Label for the submit button.
+
+    Example context (json):
+    {
+        "formaction": "https://example.com/mod/lesson/continue.php",
+        "sesskey": "abc123",
+        "qfmarkername": "_qf__lesson_display_answer_form_multichoice_singleanswer",
+        "cmid": 7,
+        "pageid": 3,
+        "contents": "<p>Pick the right word</p>",
+        "multiple": false,
+        "answercolumns": 2,
+        "submitlabel": "Submit",
+        "palette": {"primary": "#6c5ce7", "surface": "#ffffff", "text": "#2d2d44", "accent": "#00b894"},
+        "answers": [
+            {"name": "answerid", "value": "11", "type": "radio", "label": "croissant", "checked": false, "disabled": false}
+        ]
+    }
+}}
+<div class="lesson-design-card" style="--ld-primary: {{palette.primary}}; --ld-surface: {{palette.surface}}; --ld-text: {{palette.text}}; --ld-accent: {{palette.accent}};">
+    <form method="post" action="{{formaction}}" class="lesson-design-card__form">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="{{qfmarkername}}" value="1">
+        <input type="hidden" name="id" value="{{cmid}}">
+        <input type="hidden" name="pageid" value="{{pageid}}">
+        <div class="lesson-design-card__prompt">{{{contents}}}</div>
+        <div class="lesson-design-card__answers lesson-design-card__answers--cols{{answercolumns}}">
+            {{#answers}}
+                <label class="lesson-design-card__answer">
+                    <input type="{{type}}" name="{{name}}" value="{{value}}" {{#checked}}checked{{/checked}} {{#disabled}}disabled{{/disabled}}>
+                    <span class="lesson-design-card__answer-label">{{{label}}}</span>
+                </label>
+            {{/answers}}
+        </div>
+        <div class="lesson-design-card__nav">
+            <button type="submit" name="submitbutton" class="btn btn-primary lesson-design-card__next">{{submitlabel}}</button>
+        </div>
+    </form>
+</div>
