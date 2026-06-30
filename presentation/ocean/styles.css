@@ -1,0 +1,51 @@
+.path-mod-lesson.lesson-skin-ocean .lesson-skin-stage {
+    background: linear-gradient(180deg, #effcff, #f7fbff);
+    border: 1px solid #a7d8e8;
+    border-radius: .75rem;
+    color: #123947;
+    display: grid;
+    gap: 1rem;
+    grid-template-areas:
+        "nav progress"
+        "attempt attempt"
+        "score score"
+        "main main";
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+    padding: 1.25rem;
+}
+
+.path-mod-lesson.lesson-skin-ocean .lesson-skin-region-main {
+    background: rgba(255, 255, 255, .86);
+    border: 1px solid #65b8cc;
+    border-radius: .75rem;
+    padding: 1.25rem;
+}
+
+.path-mod-lesson.lesson-skin-ocean .answeroption,
+.path-mod-lesson.lesson-skin-ocean .answeroptiongroup .form-check {
+    align-items: center;
+    background: #f7fdff;
+    border: 1px solid #65b8cc;
+    border-radius: .75rem;
+    display: flex;
+    margin: .75rem 0;
+    min-height: 4rem;
+    padding: 1rem 1.25rem;
+}
+
+.path-mod-lesson.lesson-skin-ocean .answeroption input,
+.path-mod-lesson.lesson-skin-ocean .answeroptiongroup input {
+    margin-right: .75rem;
+}
+
+@media (max-width: 767.98px) {
+    .path-mod-lesson.lesson-skin-ocean .lesson-skin-stage {
+        grid-template-areas:
+            "nav"
+            "attempt"
+            "score"
+            "main"
+            "progress";
+        grid-template-columns: 1fr;
+    }
+}

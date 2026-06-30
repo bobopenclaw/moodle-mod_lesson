@@ -120,6 +120,10 @@ class mod_lesson_mod_form extends moodleform_mod {
         $mform->setDefault('ongoing', $lessonconfig->ongoing);
         $mform->setAdvanced('ongoing', $lessonconfig->ongoing_adv);
 
+        $mform->addElement('select', 'skin', get_string('skin', 'lesson'), lesson_get_available_skins());
+        $mform->addHelpButton('skin', 'skin', 'lesson');
+        $mform->setDefault('skin', 'standard');
+
         $mform->addElement('selectyesno', 'displayleft', get_string('displayleftmenu', 'lesson'));
         $mform->addHelpButton('displayleft', 'displayleftmenu', 'lesson');
         $mform->setDefault('displayleft', $lessonconfig->displayleftmenu);

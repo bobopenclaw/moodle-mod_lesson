@@ -81,5 +81,19 @@ function xmldb_lesson_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2025100601, 'lesson');
     }
 
+    if ($oldversion < 2026063000) {
+        // Define field skin to be added to lesson.
+        $table = new xmldb_table('lesson');
+        $field = new xmldb_field('skin', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, 'standard', 'bgcolor');
+
+        // Conditionally launch add field skin.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Lesson savepoint reached.
+        upgrade_mod_savepoint(true, 2026063000, 'lesson');
+    }
+
     return true;
 }

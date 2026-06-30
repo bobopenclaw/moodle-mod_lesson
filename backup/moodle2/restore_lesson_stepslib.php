@@ -89,6 +89,10 @@ class restore_lesson_activity_structure_step extends restore_activity_structure_
             $data->introformat = FORMAT_HTML;
         }
 
+        if (!isset($data->skin)) {
+            $data->skin = 'standard';
+        }
+
         // Compatibility with old backups with maxtime and timed fields.
         if (!isset($data->timelimit)) {
             if (isset($data->timed) && isset($data->maxtime) && $data->timed) {

@@ -203,6 +203,33 @@ class mod_lesson_renderer extends plugin_renderer_base {
     }
 
     /**
+     * Returns HTML for the skinnable lesson page layout.
+     *
+     * @param lesson $lesson
+     * @param array $regions
+     * @return string
+     */
+    public function display_skin_page_layout(lesson $lesson, array $regions): string {
+        $skin = lesson_get_skin($lesson->skin ?? 'standard');
+
+        $context = [
+            'skin' => $skin,
+            'globalnavigation' => $regions['globalnavigation'] ?? '',
+            'attemptheading' => $regions['attemptheading'] ?? '',
+            'score' => $regions['score'] ?? '',
+            'maincontentanchor' => $regions['maincontentanchor'] ?? '',
+            'content' => $regions['content'] ?? '',
+            'progress' => $regions['progress'] ?? '',
+            'hasglobalnavigation' => !empty($regions['globalnavigation']),
+            'hasattemptheading' => !empty($regions['attemptheading']),
+            'hasscore' => !empty($regions['score']),
+            'hasprogress' => !empty($regions['progress']),
+        ];
+
+        return $this->render_from_template(lesson_get_skin_template($skin), $context);
+    }
+
+    /**
      * Returns HTML to display a collapsed edit form
      *
      * @param lesson $lesson

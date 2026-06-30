@@ -1,0 +1,39 @@
+.path-mod-lesson.lesson-skin-cards .lesson-skin-stage {
+    display: grid;
+    gap: 1rem;
+    grid-template-areas:
+        "nav"
+        "attempt"
+        "score"
+        "main"
+        "progress";
+}
+
+.path-mod-lesson.lesson-skin-cards .lesson-skin-card {
+    background: #fff;
+    border-radius: .75rem;
+    box-shadow: 0 .25rem 1rem rgba(0, 0, 0, .08);
+    padding: 1.25rem;
+}
+
+.path-mod-lesson.lesson-skin-cards .answeroption,
+.path-mod-lesson.lesson-skin-cards .answeroptiongroup .form-check {
+    align-items: center;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-radius: .75rem;
+    display: flex;
+    margin: .75rem 0;
+    min-height: 4rem;
+    padding: 1rem 1.25rem;
+}
+
+.path-mod-lesson.lesson-skin-cards .answeroption:hover,
+.path-mod-lesson.lesson-skin-cards .answeroptiongroup .form-check:hover {
+    border-color: currentcolor;
+}
+
+.path-mod-lesson.lesson-skin-cards .answeroption input,
+.path-mod-lesson.lesson-skin-cards .answeroptiongroup input {
+    margin-right: .75rem;
+}

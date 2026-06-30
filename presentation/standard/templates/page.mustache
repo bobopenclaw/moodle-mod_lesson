@@ -1,0 +1,26 @@
+<div class="lesson-skin-stage lesson-skin-stage-standard">
+    {{#hasglobalnavigation}}
+        <div class="lesson-skin-region lesson-skin-region-globalnavigation">
+            {{{globalnavigation}}}
+        </div>
+    {{/hasglobalnavigation}}
+    {{#hasattemptheading}}
+        <div class="lesson-skin-region lesson-skin-region-attemptheading">
+            {{{attemptheading}}}
+        </div>
+    {{/hasattemptheading}}
+    {{#hasscore}}
+        <div class="lesson-skin-region lesson-skin-region-score">
+            {{{score}}}
+        </div>
+    {{/hasscore}}
+    <div class="lesson-skin-region lesson-skin-region-main">
+        {{{maincontentanchor}}}
+        {{{content}}}
+    </div>
+    {{#hasprogress}}
+        <div class="lesson-skin-region lesson-skin-region-progress">
+            {{{progress}}}
+        </div>
+    {{/hasprogress}}
+</div>

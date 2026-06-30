@@ -75,7 +75,7 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
             'maxanswers', 'maxattempts', 'review', 'nextpagedefault', 'feedback',
             'minquestions', 'maxpages', 'timelimit', 'retake', 'activitylink',
             'mediafile', 'mediaheight', 'mediawidth', 'mediaclose', 'slideshow',
-            'width', 'height', 'bgcolor', 'displayleft', 'displayleftif', 'progressbar',
+            'width', 'height', 'bgcolor', 'skin', 'displayleft', 'displayleftif', 'progressbar',
             'available', 'deadline', 'timemodified',
             'completionendreached', 'completiontimespent', 'allowofflineattempts'
         ));

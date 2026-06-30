@@ -55,6 +55,13 @@ if ($pageid !== null) {
 $PAGE->set_url($url);
 $PAGE->force_settings_menu();
 $PAGE->add_body_class('limitedwidth');
+$skin = lesson_get_skin($lesson->skin ?? 'standard');
+$PAGE->add_body_class('lesson-skin');
+$PAGE->add_body_class('lesson-skin-' . $skin);
+$PAGE->requires->css(new moodle_url('/mod/lesson/styles.css'));
+if ($skinstylesheet = lesson_get_skin_stylesheet($skin)) {
+    $PAGE->requires->css($skinstylesheet);
+}
 
 $context = $lesson->context;
 $canmanage = $lesson->can_manage();
@@ -239,22 +246,34 @@ if ($pageid != LESSON_EOL) {
     lesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
     echo $lessonoutput->header($lesson, $cm, $currenttab, $extraeditbuttons, $lessonpageid, $extrapagetitle);
     $editbuttons->set_currentpage($lessonpageid);
-    echo $lessonoutput->render($editbuttons);
+    $globalnavigation = $lessonoutput->render($editbuttons);
 
+    $attemptheading = '';
     if ($attemptflag) {
         // Get correct heading level for the attempts heading.
         $headinglevel = $PAGE->activityheader->get_heading_level();
-        echo $OUTPUT->heading(get_string('attempt', 'lesson', $retries), $headinglevel);
+        $attemptheading = $OUTPUT->heading(get_string('attempt', 'lesson', $retries), $headinglevel);
     }
+
+    $score = '';
     // This calculates and prints the ongoing score.
     if ($lesson->ongoing && !empty($pageid) && !$reviewmode) {
-        echo $lessonoutput->ongoing_score($lesson);
+        $score = $lessonoutput->ongoing_score($lesson);
     }
+
+    $maincontentanchor = '';
     if ($lesson->displayleft) {
-        echo '<a name="maincontent" id="maincontent" title="' . get_string('anchortitle', 'lesson') . '"></a>';
+        $maincontentanchor = '<a name="maincontent" id="maincontent" title="' . get_string('anchortitle', 'lesson') . '"></a>';
     }
-    echo $lessoncontent;
-    echo $lessonoutput->progress_bar($lesson);
+
+    echo $lessonoutput->display_skin_page_layout($lesson, [
+        'globalnavigation' => $globalnavigation,
+        'attemptheading' => $attemptheading,
+        'score' => $score,
+        'maincontentanchor' => $maincontentanchor,
+        'content' => $lessoncontent,
+        'progress' => $lessonoutput->progress_bar($lesson),
+    ]);
     echo $lessonoutput->footer();
 
 } else {
@@ -269,7 +288,9 @@ if ($pageid != LESSON_EOL) {
     lesson_add_fake_blocks($PAGE, $cm, $lesson, $timer);
     echo $lessonoutput->header($lesson, $cm, $currenttab, $extraeditbuttons, $lessonpageid, get_string("congratulations", "lesson"));
     $editbuttons->set_currentpage($lessonpageid);
-    echo $lessonoutput->render($editbuttons);
-    echo $lessoncontent;
+    echo $lessonoutput->display_skin_page_layout($lesson, [
+        'globalnavigation' => $lessonoutput->render($editbuttons),
+        'content' => $lessoncontent,
+    ]);
     echo $lessonoutput->footer();
 }

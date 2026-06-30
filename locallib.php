@@ -69,6 +69,73 @@ define("LESSON_OTHER_ANSWERS", "@#wronganswer#@");
 /// starts with lesson_
 
 /**
+ * Returns the available lesson skins.
+ *
+ * @return array
+ */
+function lesson_get_available_skins(): array {
+    $skins = [];
+    foreach (core_component::get_plugin_list('lessonpresentation') as $name => $path) {
+        $component = 'lessonpresentation_' . $name;
+        $skins[$name] = get_string('pluginname', $component);
+    }
+
+    return $skins ?: ['standard' => get_string('skin_standard', 'lesson')];
+}
+
+/**
+ * Returns a valid lesson skin key.
+ *
+ * @param string|null $skin
+ * @return string
+ */
+function lesson_get_skin(?string $skin): string {
+    $skin = clean_param($skin ?? 'standard', PARAM_ALPHANUMEXT);
+    return array_key_exists($skin, lesson_get_available_skins()) ? $skin : 'standard';
+}
+
+/**
+ * Returns the component name for a lesson skin.
+ *
+ * @param string $skin
+ * @return string
+ */
+function lesson_get_skin_component(string $skin): string {
+    return 'lessonpresentation_' . lesson_get_skin($skin);
+}
+
+/**
+ * Returns the Mustache template used to render a lesson skin.
+ *
+ * @param string $skin
+ * @return string
+ */
+function lesson_get_skin_template(string $skin): string {
+    $skin = lesson_get_skin($skin);
+    if (core_component::get_plugin_directory('lessonpresentation', $skin)) {
+        return lesson_get_skin_component($skin) . '/page';
+    }
+
+    return 'mod_lesson/skin_page';
+}
+
+/**
+ * Returns the stylesheet URL for a lesson skin, if present.
+ *
+ * @param string $skin
+ * @return moodle_url|null
+ */
+function lesson_get_skin_stylesheet(string $skin): ?moodle_url {
+    $skin = lesson_get_skin($skin);
+    $path = core_component::get_plugin_directory('lessonpresentation', $skin);
+    if ($path && file_exists($path . '/styles.css')) {
+        return new moodle_url('/mod/lesson/presentation/' . $skin . '/styles.css');
+    }
+
+    return null;
+}
+
+/**
  * Checks to see if a LESSON_CLUSTERJUMP or
  * a LESSON_UNSEENBRANCHPAGE is used in a lesson.
  *

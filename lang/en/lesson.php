@@ -618,6 +618,11 @@ $string['yourcurrentgradeisoutof'] = 'Your current grade is {$a->grade} out of {
 $string['youshouldview'] = 'You should answer at least: {$a}';
 $string['subplugintype_lessonpagetype_plural'] = 'Lesson page types';
 $string['settings'] = 'Settings';
+$string['skin'] = 'Lesson skin';
+$string['skin_help'] = 'The visual presentation used for lesson pages. Skins change the look of the lesson while keeping the lesson page type, answers, grading and jumps unchanged.';
+$string['skin_standard'] = 'Standard';
+$string['subplugintype_lessonpresentation'] = 'Lesson presentation';
+$string['subplugintype_lessonpresentation_plural'] = 'Lesson presentations';
 
 // Deprecated since Moodle 4.5.
 $string['useroverridesdeleted'] = 'User overrides deleted';

@@ -1,8 +1,10 @@
 {
     "subplugintypes": {
-        "lessonpagetype": "pagetype"
+        "lessonpagetype": "pagetype",
+        "lessonpresentation": "presentation"
     },
     "plugintypes": {
-        "lessonpagetype": "mod/lesson/pagetype"
+        "lessonpagetype": "mod/lesson/pagetype",
+        "lessonpresentation": "mod/lesson/presentation"
     }
 }

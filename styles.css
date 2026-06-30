@@ -1,0 +1,38 @@
+.path-mod-lesson.lesson-skin .contents {
+    margin-bottom: 1.25rem;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-stage {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-region-globalnavigation .tertiary-navigation {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-region-progress {
+    margin-top: 1rem;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-region-globalnavigation {
+    grid-area: nav;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-region-attemptheading {
+    grid-area: attempt;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-region-score {
+    grid-area: score;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-region-main {
+    grid-area: main;
+}
+
+.path-mod-lesson.lesson-skin .lesson-skin-region-progress {
+    grid-area: progress;
+}
