@@ -27,7 +27,7 @@ mustache, XMLDB, PHPUnit + Behat. Fork policy: core edits marked with `MBS-HACK`
   `default` for unknown/disabled values.
 - Config-only templates: admins edit *parameters*, never raw markup.
 - Surgical changes: `default` template output must be byte-identical to today.
-- Mark every core deviation with `# +++ MBS-HACK(<author>): reason … # --- MBS-HACK`.
+- Mark every core deviation with `# +++ Core-HACK(<author>): reason … # --- Core-HACK`.
 - Quality gates before finishing: `bindev/codechecker.sh <abs plugin path>` and
   `bindev/moodlecheck.sh <abs plugin path>` clean.
 - Plugin absolute path (inside repo): `mbsmoodle/public/mod/lesson`.
