@@ -15,16 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Version information for lessonpagetype_wordsgame
  *
- * @package mod_lesson
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @package    lessonpagetype_wordsgame
+ * @copyright  2026 David Herney @ BambuCo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2025100601.01;     // The current module version (Date: YYYYMMDDXX).
-$plugin->requires  = 2025092600;    // Requires this Moodle version.
-$plugin->component = 'mod_lesson'; // Full name of the plugin (used for diagnostics)
-$plugin->cron      = 0;
+$plugin->component    = 'lessonpagetype_wordsgame';
+$plugin->release      = '1.0';
+$plugin->version      = 2026062800;
+$plugin->requires     = 2025100600;
+$plugin->supported    = [501, 501];
+$plugin->maturity     = MATURITY_BETA;

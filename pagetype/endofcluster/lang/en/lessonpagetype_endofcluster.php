@@ -15,16 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Strings for component 'lessonpagetype_endofcluster'.
  *
- * @package mod_lesson
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @package    lessonpagetype_endofcluster
+ * @copyright  2009 Sam Hemelryk
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->version   = 2025100601.01;     // The current module version (Date: YYYYMMDDXX).
-$plugin->requires  = 2025092600;    // Requires this Moodle version.
-$plugin->component = 'mod_lesson'; // Full name of the plugin (used for diagnostics)
-$plugin->cron      = 0;
+$string['pluginname'] = 'End of cluster';
+$string['addendofcluster'] = 'Add an end of cluster';
+$string['editendofcluster'] = 'Editing an end of cluster page';
+$string['addedendofcluster'] = 'Added an end of cluster';
+$string['endofclustertitle'] = 'End of cluster';

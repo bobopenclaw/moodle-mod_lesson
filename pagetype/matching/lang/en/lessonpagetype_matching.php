@@ -15,9 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * page type with differents simple games
+ * Strings for component 'lessonpagetype_matching'.
  *
- * @package    mod_lesson
- * @copyright  2026 David Herney @ BambuCo
+ * @package    lessonpagetype_matching
+ * @copyright  2009 Sam Hemelryk
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+$string['pluginname'] = 'Matching';
+$string['addmatching'] = 'Create a Matching question page';
+$string['editmatching'] = 'Editing a Matching question page';

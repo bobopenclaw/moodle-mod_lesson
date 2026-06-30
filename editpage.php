@@ -145,9 +145,10 @@ if ($edit) {
     // Let the lesson pages make updates if required.
     $data = $editpage->update_form_data($data);
 
+    $pagetype = 'lessonpagetype_' . $mform->qtypestring;
     $mform->set_data($data);
     $PAGE->navbar->add(get_string('edit'), new moodle_url('/mod/lesson/edit.php', array('id'=>$id)));
-    $PAGE->navbar->add(get_string('editingquestionpage', 'lesson', get_string($mform->qtypestring, 'lesson')));
+    $PAGE->navbar->add(get_string('editingquestionpage', 'lesson', get_string($mform->qtypestring, $pagetype)));
 } else {
     // Give the page type being created a chance to override the creation process
     // this is used by endofbranch, cluster, and endofcluster to skip the creation form.
@@ -165,7 +166,13 @@ if ($edit) {
     $mform->set_data($data);
     $PAGE->navbar->add(get_string('addanewpage', 'lesson'), $PAGE->url);
     if ($qtype !== 'unknown') {
-        $PAGE->navbar->add(get_string($mform->qtypestring, 'lesson'));
+        if ($mform->qtypestring == 'selectaqtype') {
+            $navtext = get_string($mform->qtypestring, 'lesson');
+        } else {
+            $pagetype = 'lessonpagetype_' . $mform->qtypestring;
+            $navtext = get_string('pluginname', $pagetype);
+        }
+        $PAGE->navbar->add($navtext);
     }
 }
 

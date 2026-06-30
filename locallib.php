@@ -1336,10 +1336,11 @@ abstract class lesson_add_page_form_base extends moodleform {
         $editoroptions = $this->_customdata['editoroptions'];
 
         if ($this->qtypestring != 'selectaqtype') {
+            $pagetype = 'lessonpagetype_' . $this->qtypestring;
             if ($this->_customdata['edit']) {
-                $mform->addElement('header', 'qtypeheading', get_string('edit'. $this->qtypestring, 'lesson'));
+                $mform->addElement('header', 'qtypeheading', get_string('edit'. $this->qtypestring, $pagetype));
             } else {
-                $mform->addElement('header', 'qtypeheading', get_string('add'. $this->qtypestring, 'lesson'));
+                $mform->addElement('header', 'qtypeheading', get_string('add'. $this->qtypestring, $pagetype));
             }
         }
 
@@ -5226,23 +5227,25 @@ class lesson_page_type_manager {
     }
 
     /**
-     * Finds and loads all lesson page types in mod/lesson/pagetypes
+     * Finds and loads all lesson page types from subplugins (mod/lesson/pagetype/)
+     * with fallback to legacy directory (mod/lesson/pagetypes/).
      *
      * @param lesson $lesson
      */
     public function load_lesson_types(lesson $lesson) {
         global $CFG;
-        $basedir = $CFG->dirroot.'/mod/lesson/pagetypes/';
-        $dir = dir($basedir);
-        while (false !== ($entry = $dir->read())) {
-            if (strpos($entry, '.')===0 || !preg_match('#^[a-zA-Z]+\.php#i', $entry)) {
-                continue;
-            }
-            require_once($basedir.$entry);
-            $class = 'lesson_page_type_'.strtok($entry,'.');
-            if (class_exists($class)) {
-                $pagetype = new $class(new stdClass, $lesson);
-                $this->types[$pagetype->typeid] = $pagetype;
+
+        // Load page types from subplugins.
+        $plugins = \core_component::get_plugin_list('lessonpagetype');
+        foreach ($plugins as $name => $dir) {
+            $file = $dir . '/pagetype.php';
+            if (file_exists($file)) {
+                require_once($file);
+                $class = 'lesson_page_type_' . $name;
+                if (class_exists($class)) {
+                    $pagetype = new $class(new stdClass, $lesson);
+                    $this->types[$pagetype->typeid] = $pagetype;
+                }
             }
         }
 

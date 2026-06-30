@@ -1,0 +1,8 @@
+{
+    "subplugintypes": {
+        "lessonpagetype": "pagetype"
+    },
+    "plugintypes": {
+        "lessonpagetype": "mod/lesson/pagetype"
+    }
+}

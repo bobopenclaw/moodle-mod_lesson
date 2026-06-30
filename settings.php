@@ -24,6 +24,12 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+$ADMIN->add('modsettings', new admin_category('modlessonfolder', new lang_string('pluginname', 'mod_lesson'),
+    $module->is_enabled() === false));
+
+$settings = new admin_settingpage($section, get_string('settings'),
+    'moodle/site:config', $module->is_enabled() === false);
+
 if ($ADMIN->fulltree) {
     require_once($CFG->dirroot.'/mod/lesson/locallib.php');
     $yesno = array(0 => get_string('no'), 1 => get_string('yes'));
@@ -178,4 +184,16 @@ if ($ADMIN->fulltree) {
         get_string('minimumnumberofquestions', 'lesson'), get_string('minimumnumberofquestions_help', 'lesson'),
         array('value' => 0, 'adv' => true), $pages));
 
+}
+
+$ADMIN->add('modlessonfolder', $settings);
+// Tell core we already added the settings structure.
+$settings = null;
+
+$ADMIN->add('modlessonfolder', new admin_category('lessonpagetypeplugins',
+    new lang_string('pagetypeplugins', 'lesson'), !$module->is_enabled()));
+
+foreach (core_plugin_manager::instance()->get_plugins_of_type('lessonpagetype') as $plugin) {
+    /** @var \mod_lesson\plugininfo\lessonpagetype $plugin */
+    $plugin->load_settings($ADMIN, 'lessonpagetypeplugins', $hassiteconfig);
 }

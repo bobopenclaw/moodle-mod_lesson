@@ -452,6 +452,7 @@ $string['pleaseenteryouranswerinthebox'] = 'Please enter your answer in the box'
 $string['pleasecheckoneanswer'] = 'Please check one answer';
 $string['pleasecheckoneormoreanswers'] = 'Please check one or more answers';
 $string['pleasematchtheabovepairs'] = 'Please match the above pairs';
+$string['pagetypeplugins'] = 'Page type plugins';
 $string['pluginadministration'] = 'Lesson administration';
 $string['pluginname'] = 'Lesson';
 $string['pointsearned'] = 'Points earned';
@@ -615,6 +616,8 @@ $string['youranswer'] = 'Your answer';
 $string['yourcurrentgradeis'] = 'Your current grade is {$a}';
 $string['yourcurrentgradeisoutof'] = 'Your current grade is {$a->grade} out of {$a->total}';
 $string['youshouldview'] = 'You should answer at least: {$a}';
+$string['subplugintype_lessonpagetype_plural'] = 'Lesson page types';
+$string['settings'] = 'Settings';
 
 // Deprecated since Moodle 4.5.
 $string['useroverridesdeleted'] = 'User overrides deleted';

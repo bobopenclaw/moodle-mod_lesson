@@ -15,16 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Version information for the lessonpagetype_cluster plugin.
  *
- * @package mod_lesson
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @package    lessonpagetype_cluster
+ * @copyright  2009 Sam Hemelryk
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2025100601.01;     // The current module version (Date: YYYYMMDDXX).
-$plugin->requires  = 2025092600;    // Requires this Moodle version.
-$plugin->component = 'mod_lesson'; // Full name of the plugin (used for diagnostics)
-$plugin->cron      = 0;
+$plugin->version   = 2025100600;
+$plugin->requires  = 2025092600;
+$plugin->component = 'lessonpagetype_cluster';
