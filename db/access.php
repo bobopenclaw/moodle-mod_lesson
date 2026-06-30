@@ -28,6 +28,17 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
+    // +++ MBS-HACK(mebis): design templates feature.
+    'mod/lesson:managetemplates' => array(
+        'riskbitmask' => RISK_CONFIG | RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // --- MBS-HACK
+
     'mod/lesson:addinstance' => array(
         'riskbitmask' => RISK_XSS,
 

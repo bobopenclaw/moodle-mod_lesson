@@ -30,6 +30,13 @@ $ADMIN->add('modsettings', new admin_category('modlessonfolder', new lang_string
 $settings = new admin_settingpage($section, get_string('settings'),
     'moodle/site:config', $module->is_enabled() === false);
 
+// +++ MBS-HACK(mebis): design templates feature.
+$ADMIN->add('modlessonfolder', new admin_externalpage('lessontemplates',
+    get_string('design_managetemplates', 'lesson'),
+    new moodle_url('/mod/lesson/templates.php'),
+    'mod/lesson:managetemplates'));
+// --- MBS-HACK
+
 if ($ADMIN->fulltree) {
     require_once($CFG->dirroot.'/mod/lesson/locallib.php');
     $yesno = array(0 => get_string('no'), 1 => get_string('yes'));
