@@ -667,7 +667,7 @@ function lesson_process_group_deleted_in_course($courseid, $groupid = null) {
  */
 function lesson_get_overview_report_table_and_data(lesson $lesson, $currentgroup) {
     global $DB, $CFG, $OUTPUT;
-    require_once($CFG->dirroot . '/mod/lesson/pagetypes/branchtable.php');
+    require_once($CFG->dirroot . '/mod/lesson/pagetype/branchtable/pagetype.php');
 
     $context = $lesson->context;
     $cm = $lesson->cm;
