@@ -12,12 +12,9 @@ Feature: Choose a lesson design template
       | activity | name      | course | idnumber |
       | lesson   | Test less | C1     | lesson1  |
 
-  @javascript
   Scenario: The design selector appears and saves
     Given I am on the "Test less" "lesson activity editing" page logged in as admin
-    And I expand all fieldsets
     When I set the field "Design template" to "Monsterwelt"
     And I press "Save and display"
     And I am on the "Test less" "lesson activity editing" page
-    And I expand all fieldsets
     Then the field "Design template" matches value "Monsterwelt"
