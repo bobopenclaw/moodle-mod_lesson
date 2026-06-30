@@ -125,6 +125,17 @@ class mod_lesson_mod_form extends moodleform_mod {
         $mform->setDefault('displayleft', $lessonconfig->displayleftmenu);
         $mform->setAdvanced('displayleft', $lessonconfig->displayleftmenu_adv);
 
+        // +++ MBS-HACK(mebis): design templates feature.
+        $designoptions = \mod_lesson\local\template_manager::menu_options();
+        if (empty($designoptions)) {
+            $designoptions = ['default' => get_string('design_default', 'lesson')];
+        }
+        $mform->addElement('select', 'design', get_string('design', 'lesson'), $designoptions);
+        $mform->addHelpButton('design', 'design', 'lesson');
+        $mform->setDefault('design', $lessonconfig->design ?? 'default');
+        $mform->setType('design', PARAM_ALPHANUMEXT);
+        // --- MBS-HACK
+
         $options = array();
         for($i = 100; $i >= 0; $i--) {
             $options[$i] = $i.'%';

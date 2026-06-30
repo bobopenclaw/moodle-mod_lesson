@@ -76,6 +76,16 @@ if ($ADMIN->fulltree) {
         get_string('displayleftif', 'lesson'), get_string('displayleftif_help', 'lesson'),
         array('value' => 0, 'adv' => true), $percentage));
 
+    // +++ MBS-HACK(mebis): design templates feature.
+    $designoptions = \mod_lesson\local\template_manager::menu_options();
+    if (empty($designoptions)) {
+        $designoptions = ['default' => get_string('design_default', 'lesson')];
+    }
+    $settings->add(new admin_setting_configselect_with_advanced('mod_lesson/design',
+        get_string('design', 'lesson'), get_string('design_help', 'lesson'),
+        array('value' => 'default', 'adv' => false), $designoptions));
+    // --- MBS-HACK
+
     // Slideshow settings.
     $settings->add(new admin_setting_configselect_with_advanced('mod_lesson/slideshow',
         get_string('slideshow', 'lesson'), get_string('slideshow_help', 'lesson'),
