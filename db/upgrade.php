@@ -81,5 +81,41 @@ function xmldb_lesson_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2025100601, 'lesson');
     }
 
+    // +++ MBS-HACK(mebis): design templates feature.
+    if ($oldversion < 2026063000) {
+        global $CFG;
+        require_once($CFG->dirroot . '/mod/lesson/lib.php');
+
+        // Add lesson.design field.
+        $table = new xmldb_table('lesson');
+        $field = new xmldb_field('design', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, 'default', 'allowofflineattempts');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Create lesson_design_template table.
+        $templatetable = new xmldb_table('lesson_design_template');
+        if (!$dbman->table_exists($templatetable)) {
+            $templatetable->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+            $templatetable->add_field('name', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
+            $templatetable->add_field('idnumber', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null);
+            $templatetable->add_field('baseskin', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, 'default');
+            $templatetable->add_field('config', XMLDB_TYPE_TEXT, null, null, null, null, null);
+            $templatetable->add_field('enabled', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1');
+            $templatetable->add_field('sortorder', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+            $templatetable->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+            $templatetable->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+            $templatetable->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+            $templatetable->add_index('idnumber', XMLDB_INDEX_UNIQUE, ['idnumber']);
+            $dbman->create_table($templatetable);
+        }
+
+        // Seed built-in templates.
+        lesson_install_builtin_templates();
+
+        upgrade_mod_savepoint(true, 2026063000, 'lesson');
+    }
+    // --- MBS-HACK
+
     return true;
 }

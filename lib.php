@@ -1733,3 +1733,50 @@ function mod_lesson_core_calendar_get_event_action_string(string $eventtype): st
 
     return get_string($identifier, 'lesson', $modulename);
 }
+
+// +++ MBS-HACK(mebis): design templates feature.
+/**
+ * Seed the built-in design templates ('default', 'monsterwelt') idempotently.
+ *
+ * @return void
+ */
+function lesson_install_builtin_templates() {
+    global $DB;
+    $now = time();
+    $builtins = [
+        (object) [
+            'name' => get_string('design_default', 'lesson'),
+            'idnumber' => 'default',
+            'baseskin' => 'default',
+            'config' => '{}',
+            'enabled' => 1,
+            'sortorder' => 0,
+        ],
+        (object) [
+            'name' => get_string('design_monsterwelt', 'lesson'),
+            'idnumber' => 'monsterwelt',
+            'baseskin' => 'card',
+            'config' => json_encode([
+                'palette' => [
+                    'primary' => '#6c5ce7',
+                    'surface' => '#ffffff',
+                    'text' => '#2d2d44',
+                    'accent' => '#00b894',
+                ],
+                'answercolumns' => 2,
+                'nav' => ['showback' => true, 'showretry' => true, 'shownext' => true],
+                'showprogress' => true,
+            ]),
+            'enabled' => 1,
+            'sortorder' => 1,
+        ],
+    ];
+    foreach ($builtins as $tpl) {
+        if (!$DB->record_exists('lesson_design_template', ['idnumber' => $tpl->idnumber])) {
+            $tpl->timecreated = $now;
+            $tpl->timemodified = $now;
+            $DB->insert_record('lesson_design_template', $tpl);
+        }
+    }
+}
+// --- MBS-HACK

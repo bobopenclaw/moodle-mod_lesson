@@ -15,16 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Install-time setup for mod_lesson.
  *
- * @package mod_lesson
- * @copyright  1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @package    mod_lesson
+ * @copyright  2026 mebis
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026063000;     // The current module version (Date: YYYYMMDDXX).      // MBS-HACK(mebis): bumped for design templates feature.
-$plugin->requires  = 2025092600;    // Requires this Moodle version.
-$plugin->component = 'mod_lesson'; // Full name of the plugin (used for diagnostics)
-$plugin->cron      = 0;
+/**
+ * Post-install hook: seed the built-in design templates.
+ *
+ * @return void
+ */
+function xmldb_lesson_install() {
+    global $CFG;
+    require_once($CFG->dirroot . '/mod/lesson/lib.php');
+    lesson_install_builtin_templates();
+}
