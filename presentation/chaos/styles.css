@@ -1,0 +1,276 @@
+.path-mod-lesson.lesson-skin-chaos {
+    --lesson-chaos-pink: #ff5fa2;
+    --lesson-chaos-purple: #7b5fff;
+    --lesson-chaos-yellow: #ffd23f;
+    --lesson-chaos-green: #2bd576;
+    --lesson-chaos-navy: #2b2257;
+    --lesson-chaos-cream: #fff6e9;
+}
+
+.path-mod-lesson.lesson-skin-chaos #region-main {
+    background:
+        radial-gradient(circle at 10% 10%, #ffe3f0 0, transparent 36%),
+        radial-gradient(circle at 90% 20%, #e3e0ff 0, transparent 36%),
+        var(--lesson-chaos-cream);
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-skin-stage-chaos {
+    background: #fff;
+    border: 4px solid var(--lesson-chaos-navy);
+    border-radius: 1.75rem;
+    box-shadow: 8px 8px 0 var(--lesson-chaos-navy);
+    color: var(--lesson-chaos-navy);
+    font-family: "Comic Sans MS", "Comic Neue", "Trebuchet MS", cursive, sans-serif;
+    margin: 1rem auto;
+    max-width: 760px;
+    overflow: hidden;
+    transform: rotate(-.35deg);
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-topbar {
+    align-items: center;
+    background: var(--lesson-chaos-purple);
+    border-bottom: 4px solid var(--lesson-chaos-navy);
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-progress-label {
+    color: #fff;
+    flex: 0 0 auto;
+    font-size: .9rem;
+    font-weight: 800;
+    text-shadow: 1px 1px 0 var(--lesson-chaos-navy);
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-progress {
+    flex: 1 1 auto;
+    min-width: 8rem;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-progress .progress,
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-progress progress {
+    background: #fff;
+    border: 2px solid var(--lesson-chaos-navy);
+    border-radius: 1rem;
+    height: 1rem;
+    overflow: hidden;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-progress .progress-bar {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--lesson-chaos-yellow),
+        var(--lesson-chaos-yellow) 10px,
+        #ffe07a 10px,
+        #ffe07a 20px
+    );
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-skin-region-globalnavigation {
+    flex: 0 1 auto;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-skin-region-globalnavigation .tertiary-navigation,
+.path-mod-lesson.lesson-skin-chaos .lesson-skin-region-globalnavigation .nav,
+.path-mod-lesson.lesson-skin-chaos .lesson-skin-region-globalnavigation .singlebutton {
+    margin: 0;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-skin-region-globalnavigation .btn,
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-card input[type="submit"],
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-card button,
+.path-mod-lesson.lesson-skin-chaos .lessonbutton a {
+    background: var(--lesson-chaos-yellow);
+    border: 2px solid var(--lesson-chaos-navy);
+    border-radius: 1rem;
+    box-shadow: 2px 2px 0 var(--lesson-chaos-navy);
+    color: var(--lesson-chaos-navy);
+    font-weight: 800;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-skin-region-globalnavigation .btn:hover,
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-card input[type="submit"]:hover,
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-card button:hover,
+.path-mod-lesson.lesson-skin-chaos .lessonbutton a:hover {
+    box-shadow: 1px 1px 0 var(--lesson-chaos-navy);
+    transform: translate(1px, 1px);
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-avatar-row {
+    align-items: flex-start;
+    display: flex;
+    gap: 1rem;
+    padding: 1.75rem 1.5rem .75rem;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-avatar {
+    align-items: center;
+    animation: lesson-chaos-bob 2.4s ease-in-out infinite;
+    background: var(--lesson-chaos-yellow);
+    border: 3px solid var(--lesson-chaos-navy);
+    border-radius: 50%;
+    display: flex;
+    flex: 0 0 68px;
+    height: 68px;
+    justify-content: center;
+    overflow: hidden;
+    width: 68px;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-avatar svg {
+    height: 46px;
+    width: 46px;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-speech {
+    background: #fff;
+    border: 3px solid var(--lesson-chaos-navy);
+    border-radius: 1.2rem;
+    box-shadow: 4px 4px 0 var(--lesson-chaos-navy);
+    flex: 1 1 auto;
+    line-height: 1.5;
+    min-width: 0;
+    padding: .9rem 1.1rem;
+    position: relative;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-speech::before {
+    border-bottom: 9px solid transparent;
+    border-right: 12px solid var(--lesson-chaos-navy);
+    border-top: 9px solid transparent;
+    content: "";
+    height: 0;
+    left: -14px;
+    position: absolute;
+    top: 20px;
+    width: 0;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-speech::after {
+    border-bottom: 8px solid transparent;
+    border-right: 10px solid #fff;
+    border-top: 8px solid transparent;
+    content: "";
+    height: 0;
+    left: -10px;
+    position: absolute;
+    top: 21px;
+    width: 0;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-tag {
+    color: var(--lesson-chaos-pink);
+    display: block;
+    font-size: .75rem;
+    font-weight: 900;
+    letter-spacing: .04em;
+    margin-bottom: .35rem;
+    text-transform: uppercase;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-card {
+    background: #fffbf2;
+    border: 3px dashed var(--lesson-chaos-purple);
+    border-radius: 1.4rem;
+    margin: 0 1.5rem 1.5rem;
+    padding: 2rem 1.5rem;
+}
+
+.path-mod-lesson.lesson-skin-chaos .lesson-chaos-card .contents {
+    color: var(--lesson-chaos-navy);
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.path-mod-lesson.lesson-skin-chaos .answeroption,
+.path-mod-lesson.lesson-skin-chaos .answeroptiongroup .form-check,
+.path-mod-lesson.lesson-skin-chaos .form-check {
+    align-items: center;
+    background: #fff;
+    border: 3px solid var(--lesson-chaos-navy);
+    border-radius: 1rem;
+    box-shadow: 3px 3px 0 var(--lesson-chaos-navy);
+    color: var(--lesson-chaos-navy);
+    display: flex;
+    font-weight: 800;
+    gap: .5rem;
+    justify-content: center;
+    margin: .75rem auto;
+    max-width: 28rem;
+    min-height: 3.75rem;
+    padding: 1rem;
+    transition: box-shadow .1s ease, transform .1s ease;
+}
+
+.path-mod-lesson.lesson-skin-chaos .answeroption:hover,
+.path-mod-lesson.lesson-skin-chaos .answeroptiongroup .form-check:hover,
+.path-mod-lesson.lesson-skin-chaos .form-check:hover {
+    box-shadow: 2px 2px 0 var(--lesson-chaos-navy);
+    transform: translate(1px, 1px);
+}
+
+.path-mod-lesson.lesson-skin-chaos .answeroption input,
+.path-mod-lesson.lesson-skin-chaos .answeroptiongroup input,
+.path-mod-lesson.lesson-skin-chaos .form-check input {
+    margin-right: .5rem;
+}
+
+.path-mod-lesson.lesson-skin-chaos .answeroption:has(input:checked),
+.path-mod-lesson.lesson-skin-chaos .answeroptiongroup .form-check:has(input:checked),
+.path-mod-lesson.lesson-skin-chaos .form-check:has(input:checked) {
+    background: var(--lesson-chaos-green);
+    animation: lesson-chaos-wiggle .3s ease;
+}
+
+@keyframes lesson-chaos-bob {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-6px) rotate(3deg);
+    }
+}
+
+@keyframes lesson-chaos-wiggle {
+    0%,
+    100% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .path-mod-lesson.lesson-skin-chaos .lesson-skin-stage-chaos {
+        border-radius: 1rem;
+        box-shadow: 5px 5px 0 var(--lesson-chaos-navy);
+        transform: none;
+    }
+
+    .path-mod-lesson.lesson-skin-chaos .lesson-chaos-topbar,
+    .path-mod-lesson.lesson-skin-chaos .lesson-chaos-avatar-row {
+        flex-direction: column;
+    }
+
+    .path-mod-lesson.lesson-skin-chaos .lesson-chaos-avatar-row {
+        padding: 1.25rem 1rem .5rem;
+    }
+
+    .path-mod-lesson.lesson-skin-chaos .lesson-chaos-card {
+        margin: 0 1rem 1rem;
+        padding: 1.25rem 1rem;
+    }
+
+    .path-mod-lesson.lesson-skin-chaos .lesson-chaos-speech::before,
+    .path-mod-lesson.lesson-skin-chaos .lesson-chaos-speech::after {
+        display: none;
+    }
+}

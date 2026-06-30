@@ -1,0 +1,51 @@
+<div class="lesson-skin-stage lesson-skin-stage-chaos">
+    <div class="lesson-chaos-topbar">
+        {{#hasprogress}}
+            <span class="lesson-chaos-progress-label">{{#str}}progressbar, lesson{{/str}}</span>
+            <div class="lesson-chaos-progress">
+                {{{progress}}}
+            </div>
+        {{/hasprogress}}
+        {{^hasprogress}}
+            <span class="lesson-chaos-progress-label">{{#str}}pluginname, lessonpresentation_chaos{{/str}}</span>
+        {{/hasprogress}}
+        {{#hasglobalnavigation}}
+            <div class="lesson-skin-region lesson-skin-region-globalnavigation">
+                {{{globalnavigation}}}
+            </div>
+        {{/hasglobalnavigation}}
+    </div>
+
+    <div class="lesson-chaos-avatar-row">
+        <div class="lesson-chaos-avatar" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+                <circle cx="32" cy="32" r="30" fill="#ff5fa2"/>
+                <ellipse cx="22" cy="27" rx="5" ry="6" fill="#fff"/>
+                <ellipse cx="42" cy="27" rx="5" ry="6" fill="#fff"/>
+                <circle cx="22" cy="28" r="2.5" fill="#2b2257"/>
+                <circle cx="42" cy="28" r="2.5" fill="#2b2257"/>
+                <path d="M19 42c5 7 21 7 26 0" stroke="#2b2257" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M14 14c2-4 6-5 8-2" stroke="#2b2257" stroke-width="3" stroke-linecap="round"/>
+                <path d="M50 14c-2-4-6-5-8-2" stroke="#2b2257" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="lesson-chaos-speech">
+            <span class="lesson-chaos-tag">{{#str}}pluginname, lessonpresentation_chaos{{/str}}</span>
+            {{{maincontentanchor}}}
+            {{#hasattemptheading}}
+                <div class="lesson-skin-region lesson-skin-region-attemptheading">
+                    {{{attemptheading}}}
+                </div>
+            {{/hasattemptheading}}
+            {{#hasscore}}
+                <div class="lesson-skin-region lesson-skin-region-score">
+                    {{{score}}}
+                </div>
+            {{/hasscore}}
+        </div>
+    </div>
+
+    <main class="lesson-skin-region lesson-skin-region-main lesson-chaos-card">
+        {{{content}}}
+    </main>
+</div>
