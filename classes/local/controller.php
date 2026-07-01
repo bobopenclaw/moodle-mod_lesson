@@ -88,6 +88,23 @@ class controller {
      * @return string
      */
     private static function get_appearance_design_preview_url(\stdClass $design): string {
+        $context = \context_system::instance();
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($context->id, 'mod_lesson', 'appearance_preview', $design->id, 'sortorder', false);
+        if ($files) {
+            $file = reset($files);
+            if ($file) {
+                return \moodle_url::make_pluginfile_url(
+                    $context->id,
+                    'mod_lesson',
+                    'appearance_preview',
+                    $design->id,
+                    $file->get_filepath(),
+                    $file->get_filename()
+                )->out(false);
+            }
+        }
+
         return self::get_appearance_design_file_url($design, 'appearance_preview');
     }
 

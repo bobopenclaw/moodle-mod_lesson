@@ -42,7 +42,10 @@ if ($action === 'delete' && $id) {
 
     // Delete associated files.
     $fs = get_file_storage();
-    $fs->delete_area_files($context->id, 'mod_lesson', 'appearance_design', $id);
+    $fs->delete_area_files($context->id, 'mod_lesson', 'appearance_preview', $id);
+    if (!empty($design->type)) {
+        $fs->delete_area_files($context->id, 'lessonappearance_' . $design->type, 'appearance_preview', $id);
+    }
 
     $DB->delete_records('lesson_appearance_designs', ['id' => $id]);
 

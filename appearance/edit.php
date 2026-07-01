@@ -73,6 +73,15 @@ if ($mform->is_cancelled()) {
         $design->id = $DB->insert_record('lesson_appearance_designs', $design);
     }
 
+    file_save_draft_area_files(
+        $data->appearance_preview,
+        $context->id,
+        'mod_lesson',
+        'appearance_preview',
+        $design->id,
+        \mod_lesson\form\appearance_design_form::get_preview_filemanager_options()
+    );
+
     \core\notification::add(get_string('changessaved'), \core\notification::SUCCESS);
     redirect($manageurl);
 }

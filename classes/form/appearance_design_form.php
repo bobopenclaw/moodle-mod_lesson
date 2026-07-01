@@ -28,6 +28,22 @@ require_once($CFG->libdir . '/formslib.php');
  */
 class appearance_design_form extends \moodleform {
 
+    /** @var string File area for design preview images. */
+    private const PREVIEW_FILEAREA = 'appearance_preview';
+
+    /**
+     * File manager options for the preview image.
+     *
+     * @return array
+     */
+    public static function get_preview_filemanager_options(): array {
+        return [
+            'subdirs' => 0,
+            'maxfiles' => 1,
+            'accepted_types' => ['image'],
+        ];
+    }
+
     /**
      * Form definition.
      */
@@ -59,6 +75,25 @@ class appearance_design_form extends \moodleform {
 
         $mform->addElement('select', 'type', get_string('type', 'lesson'), $typeoptions);
         $mform->addRule('type', null, 'required', null, 'client');
+
+        $draftitemid = file_get_submitted_draft_itemid(self::PREVIEW_FILEAREA);
+        file_prepare_draft_area(
+            $draftitemid,
+            $context->id,
+            'mod_lesson',
+            self::PREVIEW_FILEAREA,
+            $design->id ?? 0,
+            self::get_preview_filemanager_options()
+        );
+        $mform->addElement(
+            'filemanager',
+            self::PREVIEW_FILEAREA,
+            get_string('previewimage', 'lesson'),
+            null,
+            self::get_preview_filemanager_options()
+        );
+        $mform->addHelpButton(self::PREVIEW_FILEAREA, 'previewimage', 'lesson');
+        $mform->setDefault(self::PREVIEW_FILEAREA, $draftitemid);
 
         // Hidden id field.
         $mform->addElement('hidden', 'id');

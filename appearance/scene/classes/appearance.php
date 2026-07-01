@@ -35,7 +35,6 @@ class appearance extends \lessonappearance_base\appearance {
         'appearance_character',
         'appearance_flag',
         'appearance_sprite',
-        'appearance_preview',
         'appearance_good',
         'appearance_bad',
     ];
@@ -265,7 +264,6 @@ class appearance extends \lessonappearance_base\appearance {
             'appearance_character'  => 'character',
             'appearance_flag'       => 'flag',
             'appearance_sprite'     => 'sprite',
-            'appearance_preview'    => 'preview',
             'appearance_good'       => 'good',
             'appearance_bad'        => 'bad',
         ];

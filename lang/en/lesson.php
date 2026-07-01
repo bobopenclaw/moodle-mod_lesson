@@ -640,5 +640,7 @@ $string['groupoverridesdeleted'] = 'Group overrides deleted';
 
 // Deprecated since Moodle 5.0.
 $string['preview'] = 'Preview';
+$string['previewimage'] = 'Preview image';
+$string['previewimage_help'] = 'Optional image shown for this design in the Lesson appearance selector. If no preview image is uploaded, Moodle generates a thumbnail from the design settings when possible.';
 $string['previewlesson'] = 'Preview {$a}';
 $string['viewreports2'] = 'View {$a} completed attempts';
