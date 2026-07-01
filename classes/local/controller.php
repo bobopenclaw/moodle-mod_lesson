@@ -57,6 +57,7 @@ class controller {
                 'type' => '',
                 'typename' => get_string('default'),
                 'previewurl' => '',
+                'previewhtml' => self::get_default_preview_html(),
             ],
         ];
 
@@ -73,6 +74,7 @@ class controller {
                 'type' => $design->type,
                 'typename' => $typename,
                 'previewurl' => self::get_appearance_design_preview_url($design),
+                'previewhtml' => self::get_generated_preview_html($design),
             ];
         }
 
@@ -86,10 +88,19 @@ class controller {
      * @return string
      */
     private static function get_appearance_design_preview_url(\stdClass $design): string {
+        return self::get_appearance_design_file_url($design, 'appearance_preview');
+    }
+
+    /**
+     * Get a file URL for a design file area.
+     *
+     * @param \stdClass $design Appearance design record.
+     * @param string $filearea File area name.
+     * @return string
+     */
+    private static function get_appearance_design_file_url(\stdClass $design, string $filearea): string {
         $context = \context_system::instance();
         $component = 'lessonappearance_' . $design->type;
-        $filearea = 'appearance_preview';
-
         $fs = get_file_storage();
         $files = $fs->get_area_files($context->id, $component, $filearea, $design->id, 'sortorder', false);
         if (!$files) {
@@ -109,6 +120,103 @@ class controller {
             $file->get_filepath(),
             $file->get_filename()
         )->out(false);
+    }
+
+    /**
+     * Generate preview HTML when a design has no uploaded preview image.
+     *
+     * @param \stdClass $design Appearance design record.
+     * @return string
+     */
+    private static function get_generated_preview_html(\stdClass $design): string {
+        if ($design->type === 'scene') {
+            return self::get_scene_preview_html($design);
+        }
+
+        $classes = 'lesson-appearance-generated-preview lesson-appearance-generated-preview-' .
+            clean_param($design->type, PARAM_ALPHANUMEXT);
+        $html = \html_writer::start_div($classes);
+        $html .= \html_writer::div('', 'lesson-appearance-preview-bar');
+        $html .= \html_writer::start_div('lesson-appearance-preview-content');
+        $html .= \html_writer::div('', 'lesson-appearance-preview-line lesson-appearance-preview-line-wide');
+        $html .= \html_writer::div('', 'lesson-appearance-preview-line');
+        $html .= \html_writer::end_div();
+        $html .= \html_writer::start_div('lesson-appearance-preview-question');
+        $html .= \html_writer::div('', 'lesson-appearance-preview-answer');
+        $html .= \html_writer::div('', 'lesson-appearance-preview-answer lesson-appearance-preview-answer-short');
+        $html .= \html_writer::end_div();
+        $html .= \html_writer::end_div();
+
+        return $html;
+    }
+
+    /**
+     * Generate a scene-like preview from configured scene assets and colours.
+     *
+     * @param \stdClass $design Appearance design record.
+     * @return string
+     */
+    private static function get_scene_preview_html(\stdClass $design): string {
+        $config = !empty($design->configdata) ? (json_decode($design->configdata, true) ?: []) : [];
+        $primary = self::normalise_preview_colour($config['color_primary'] ?? '', '#3a5a8c');
+        $secondary = self::normalise_preview_colour($config['color_secondary'] ?? '', '#f4f7fb');
+
+        $backgroundurl = self::get_appearance_design_file_url($design, 'appearance_background');
+        $characterurl = self::get_appearance_design_file_url($design, 'appearance_character');
+        $flagurl = self::get_appearance_design_file_url($design, 'appearance_flag');
+        $spriteurl = self::get_appearance_design_file_url($design, 'appearance_sprite');
+
+        $style = '--lesson-preview-primary: ' . $primary . '; --lesson-preview-secondary: ' . $secondary . ';';
+        if ($backgroundurl !== '') {
+            $backgroundurl = str_replace(['\\', '"'], ['\\\\', '\"'], $backgroundurl);
+            $style .= ' background-image: url("' . $backgroundurl . '");';
+        }
+
+        $html = \html_writer::start_div('lesson-appearance-generated-preview lesson-appearance-generated-preview-scene', [
+            'style' => $style,
+        ]);
+        $html .= \html_writer::div('', 'lesson-appearance-preview-progress');
+        if ($characterurl !== '') {
+            $html .= \html_writer::img($characterurl, '', ['class' => 'lesson-appearance-preview-character']);
+        } else {
+            $html .= \html_writer::div('', 'lesson-appearance-preview-character lesson-appearance-preview-character-empty');
+        }
+        $html .= \html_writer::div('', 'lesson-appearance-preview-balloon');
+        if ($flagurl !== '') {
+            $html .= \html_writer::img($flagurl, '', ['class' => 'lesson-appearance-preview-flag']);
+        }
+        if ($spriteurl !== '') {
+            $html .= \html_writer::img($spriteurl, '', ['class' => 'lesson-appearance-preview-sprite']);
+        }
+        $html .= \html_writer::end_div();
+
+        return $html;
+    }
+
+    /**
+     * Return a safe CSS colour for generated previews.
+     *
+     * @param string $value Raw colour value.
+     * @param string $fallback Fallback colour.
+     * @return string
+     */
+    private static function normalise_preview_colour(string $value, string $fallback): string {
+        return preg_match('/^#[0-9a-fA-F]{6}$/', $value) ? $value : $fallback;
+    }
+
+    /**
+     * Preview used for the standard/no appearance option.
+     *
+     * @return string
+     */
+    private static function get_default_preview_html(): string {
+        $html = \html_writer::start_div('lesson-appearance-generated-preview lesson-appearance-generated-preview-default');
+        $html .= \html_writer::div('', 'lesson-appearance-preview-line lesson-appearance-preview-line-wide');
+        $html .= \html_writer::div('', 'lesson-appearance-preview-line');
+        $html .= \html_writer::div('', 'lesson-appearance-preview-answer');
+        $html .= \html_writer::end_div();
+
+        return $html;
     }
 
     /**

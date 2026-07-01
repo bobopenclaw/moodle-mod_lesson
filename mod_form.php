@@ -106,10 +106,7 @@ class mod_lesson_mod_form extends moodleform_mod {
             if ($tile->previewurl !== '') {
                 $tilecontent .= html_writer::img($tile->previewurl, '', ['class' => 'lesson-appearance-tile-preview']);
             } else {
-                $tilecontent .= html_writer::div(
-                    get_string('nopreviewavailable', 'lesson'),
-                    'lesson-appearance-tile-preview lesson-appearance-tile-preview-empty'
-                );
+                $tilecontent .= html_writer::div($tile->previewhtml, 'lesson-appearance-tile-preview');
             }
             $tilecontent .= html_writer::div($tile->name, 'lesson-appearance-tile-name');
             $tilecontent .= html_writer::div($tile->typename, 'lesson-appearance-tile-type');
