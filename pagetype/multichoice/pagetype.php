@@ -114,6 +114,29 @@ class lesson_page_type_multichoice extends lesson_page {
         return $mform->display();
     }
 
+    public function get_qtype_content($renderer, $attempt): string {
+        global $CFG, $PAGE;
+        $answers = $this->get_used_answers();
+        shuffle($answers);
+        $action = $CFG->wwwroot.'/mod/lesson/continue.php';
+        $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>'', 'attempt'=>$attempt);
+        if ($this->properties->qoption) {
+            $mform = new lesson_display_answer_form_multichoice_multianswer($action, $params);
+        } else {
+            $mform = new lesson_display_answer_form_multichoice_singleanswer($action, $params);
+        }
+        $data = new stdClass;
+        $data->id = $PAGE->cm->id;
+        $data->pageid = $this->properties->id;
+        $mform->set_data($data);
+
+        ob_start();
+        $mform->display();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
     public function check_answer() {
         global $DB, $CFG, $PAGE;
         $result = parent::check_answer();

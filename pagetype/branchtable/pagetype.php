@@ -159,6 +159,34 @@ class lesson_page_type_branchtable extends lesson_page {
         return $output;
     }
 
+    public function get_navigation_buttons($renderer): string {
+        global $PAGE;
+
+        $options = new stdClass;
+        $options->para = false;
+        $options->noclean = true;
+
+        $buttons = array();
+        foreach ($this->get_answers() as $answer) {
+            if ($answer->answer === '') {
+                continue;
+            }
+            $params = array();
+            $params['id'] = $PAGE->cm->id;
+            $params['pageid'] = $this->properties->id;
+            $params['sesskey'] = sesskey();
+            $params['jumpto'] = $answer->jumpto;
+            $url = new moodle_url('/mod/lesson/continue.php', $params);
+            $buttons[] = $renderer->single_button($url, strip_tags(format_text($answer->answer, FORMAT_MOODLE, $options)));
+        }
+
+        if ($this->properties->layout) {
+            return $renderer->box(implode("\n", $buttons), 'branchbuttoncontainer horizontal');
+        } else {
+            return $renderer->box(implode("\n", $buttons), 'branchbuttoncontainer vertical');
+        }
+    }
+
     public function check_answer() {
         global $USER, $DB, $PAGE, $CFG;
 

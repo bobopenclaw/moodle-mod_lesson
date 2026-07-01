@@ -75,6 +75,27 @@ class lesson_page_type_truefalse extends lesson_page {
         $event->trigger();
         return $mform->display();
     }
+    public function get_qtype_content($renderer, $attempt): string {
+        global $CFG, $PAGE;
+        $answers = $this->get_answers();
+        foreach ($answers as $key => $answer) {
+            $answers[$key] = parent::rewrite_answers_urls($answer);
+        }
+        shuffle($answers);
+
+        $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>'', 'attempt'=>$attempt);
+        $mform = new lesson_display_answer_form_truefalse($CFG->wwwroot.'/mod/lesson/continue.php', $params);
+        $data = new stdClass;
+        $data->id = $PAGE->cm->id;
+        $data->pageid = $this->properties->id;
+        $mform->set_data($data);
+
+        ob_start();
+        $mform->display();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
     public function check_answer() {
         global $DB, $CFG;
         $formattextdefoptions = new stdClass();

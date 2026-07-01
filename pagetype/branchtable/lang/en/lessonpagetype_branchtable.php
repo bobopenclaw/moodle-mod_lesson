@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['branchtable'] = 'Content';
 $string['pluginname'] = 'Content';
 $string['addabranchtable'] = 'Add a content page';
 $string['addbranchtable'] = 'Add a content page';

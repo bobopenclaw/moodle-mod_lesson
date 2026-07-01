@@ -75,6 +75,25 @@ class lesson_page_type_numerical extends lesson_page {
         return $mform->display();
     }
 
+    public function get_qtype_content($renderer, $attempt): string {
+        global $USER, $PAGE;
+        $mform = new lesson_display_answer_form_numerical(new moodle_url('/mod/lesson/continue.php'),
+            array('contents' => '', 'lessonid' => $this->lesson->id));
+        $data = new stdClass;
+        $data->id = $PAGE->cm->id;
+        $data->pageid = $this->properties->id;
+        if (isset($USER->modattempts[$this->lesson->id])) {
+            $data->answer = s($attempt->useranswer);
+        }
+        $mform->set_data($data);
+
+        ob_start();
+        $mform->display();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
     /**
      * Creates answers for this page type.
      *

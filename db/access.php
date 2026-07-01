@@ -97,6 +97,15 @@ $capabilities = array(
         )
     ),
 
+    'mod/lesson:manageappearancedesigns' => array(
+        'riskbitmask' => RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    ),
+
     'mod/lesson:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,

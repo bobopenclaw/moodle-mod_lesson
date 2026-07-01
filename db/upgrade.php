@@ -81,5 +81,44 @@ function xmldb_lesson_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2025100601, 'lesson');
     }
 
+    if ($oldversion < 2025100601.03) {
+        // Define table lesson_appearance_designs to be created.
+        $table = new xmldb_table('lesson_appearance_designs');
+
+        // Adding fields to table lesson_appearance_designs.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('uniqueid', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('type', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('enabled', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1');
+        $table->add_field('configdata', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('usermodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table lesson_appearance_designs.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('usermodified', XMLDB_KEY_FOREIGN, ['usermodified'], 'user', ['id']);
+
+        // Adding indexes to table lesson_appearance_designs.
+        $table->add_index('uniqueid', XMLDB_INDEX_UNIQUE, ['uniqueid']);
+        $table->add_index('type', XMLDB_INDEX_NOTUNIQUE, ['type']);
+
+        // Conditionally launch create table for lesson_appearance_designs.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Add appearance field to lesson table.
+        $table = new xmldb_table('lesson');
+        $field = new xmldb_field('appearance', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'allowofflineattempts');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Lesson savepoint reached.
+        upgrade_mod_savepoint(true, 2025100601.03, 'lesson');
+    }
+
     return true;
 }

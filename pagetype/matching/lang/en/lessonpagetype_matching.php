@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['matching'] = 'Matching';
 $string['pluginname'] = 'Matching';
 $string['addmatching'] = 'Create a Matching question page';
 $string['editmatching'] = 'Editing a Matching question page';

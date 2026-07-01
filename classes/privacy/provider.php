@@ -39,9 +39,9 @@ use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
 
 require_once($CFG->dirroot . '/mod/lesson/locallib.php');
-require_once($CFG->dirroot . '/mod/lesson/pagetypes/essay.php');
-require_once($CFG->dirroot . '/mod/lesson/pagetypes/matching.php');
-require_once($CFG->dirroot . '/mod/lesson/pagetypes/multichoice.php');
+require_once($CFG->dirroot . '/mod/lesson/pagetype/essay/pagetype.php');
+require_once($CFG->dirroot . '/mod/lesson/pagetype/matching/pagetype.php');
+require_once($CFG->dirroot . '/mod/lesson/pagetype/multichoice/pagetype.php');
 
 /**
  * Data provider class.

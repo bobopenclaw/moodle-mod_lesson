@@ -69,6 +69,52 @@ class lesson_page_type_matching extends lesson_page {
         return $mform->display();
     }
 
+    public function get_qtype_content($renderer, $attempt): string {
+        global $USER, $CFG, $PAGE;
+
+        $getanswers = array_slice($this->get_answers(), 2);
+        $answers = array();
+        foreach ($getanswers as $getanswer) {
+            $answers[$getanswer->id] = $getanswer;
+        }
+
+        $responses = array();
+        foreach ($answers as $answer) {
+            if ($answer->response != null) {
+                $responses[trim($answer->response)] = format_text(trim($answer->response));
+            }
+        }
+
+        $responseoptions = ['' => get_string('choosedots')];
+        if (!empty($responses)) {
+            $keys = array_keys($responses);
+            shuffle($keys);
+            foreach ($keys as $key) {
+                $responseoptions[$key] = $responses[$key];
+            }
+        }
+        if (isset($USER->modattempts[$this->lesson->id]) && !empty($attempt->useranswer)) {
+            $useranswers = explode(',', $attempt->useranswer);
+        } else {
+            $useranswers = array();
+        }
+
+        $action = $CFG->wwwroot.'/mod/lesson/continue.php';
+        $params = array('answers'=>$answers, 'useranswers'=>$useranswers, 'responseoptions'=>$responseoptions, 'lessonid'=>$this->lesson->id, 'contents'=>'');
+        $mform = new lesson_display_answer_form_matching($action, $params);
+
+        $data = new stdClass;
+        $data->id = $PAGE->cm->id;
+        $data->pageid = $this->properties->id;
+        $mform->set_data($data);
+
+        ob_start();
+        $mform->display();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
     protected function make_answer_form($attempt=null) {
         global $USER, $CFG;
         // don't shuffle answers (could be an option??)

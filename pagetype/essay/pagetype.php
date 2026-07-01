@@ -107,6 +107,44 @@ class lesson_page_type_essay extends lesson_page {
         $event->trigger();
         return $mform->display();
     }
+
+    public function get_qtype_content($renderer, $attempt): string {
+        global $PAGE, $CFG, $USER;
+
+        $context = context_module::instance($PAGE->cm->id);
+        $options = array(
+            'contents' => '',
+            'lessonid' => $this->lesson->id,
+            'attemptid' => $attempt ? $attempt->id : null,
+            'editoroptions' => array(
+                'maxbytes' => $PAGE->course->maxbytes,
+                'context' => $context,
+                'noclean' => true,
+                'maxfiles' => EDITOR_UNLIMITED_FILES,
+                'enable_filemanagement' => false
+            )
+        );
+        $mform = new lesson_display_answer_form_essay($CFG->wwwroot.'/mod/lesson/continue.php', $options);
+
+        $data = new stdClass;
+        $data->id = $PAGE->cm->id;
+        $data->pageid = $this->properties->id;
+        if (isset($USER->modattempts[$this->lesson->id])) {
+            $essayinfo = self::extract_useranswer($attempt->useranswer);
+            $data->answer = $essayinfo->answer;
+        }
+
+        $data = file_prepare_standard_editor($data, 'answer', $options['editoroptions'],
+            $context, 'mod_lesson', 'essay_answers');
+        $mform->set_data($data);
+
+        ob_start();
+        $mform->display();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
     public function create_answers($properties) {
         global $DB;
         // now add the answers

@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['truefalse'] = 'True/false';
 $string['pluginname'] = 'True/false';
 $string['addtruefalse'] = 'Create a True/false question page';
 $string['edittruefalse'] = 'Editing a True/false question page';

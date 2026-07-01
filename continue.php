@@ -90,41 +90,51 @@ echo $lessonoutput->render($editbuttons);
 if ($lesson->displayleft) {
     echo '<a name="maincontent" id="maincontent" title="'.get_string('anchortitle', 'lesson').'"></a>';
 }
-// This calculates and prints the ongoing score message
-if ($lesson->ongoing && !$reviewmode) {
-    echo $lessonoutput->ongoing_score($lesson);
-}
-if (!$reviewmode) {
-    echo format_text($result->feedback, FORMAT_MOODLE, array('context' => $context, 'noclean' => true));
-}
 
-// User is modifying attempts - save button and some instructions
-if (isset($USER->modattempts[$lesson->id])) {
-    $content = $OUTPUT->box(get_string("gotoendoflesson", "lesson"), 'center');
-    $content .= $OUTPUT->box(get_string("or", "lesson"), 'center');
-    $content .= $OUTPUT->box(get_string("continuetonextpage", "lesson"), 'center');
-    $url = new moodle_url('/mod/lesson/view.php', array('id' => $cm->id, 'pageid' => LESSON_EOL));
-    echo $content . $OUTPUT->single_button($url, get_string('finish', 'lesson'));
-}
+// Use the appearance subplugin renderer if a design is selected.
+$appearanceinstance = \mod_lesson\local\controller::get_appearance_instance($lesson);
+$appearancecontent = $appearanceinstance ? $appearanceinstance->render_continue($lesson, $page, $result, $reviewmode) : '';
 
-// Review button back
-if (!$result->correctanswer && !$result->noanswer && !$result->isessayquestion && !$reviewmode && $lesson->review && !$result->maxattemptsreached) {
-    $url = new moodle_url('/mod/lesson/view.php', array('id' => $cm->id, 'pageid' => $page->id));
-    echo $OUTPUT->single_button($url, get_string('reviewquestionback', 'lesson'));
-}
-
-$url = new moodle_url('/mod/lesson/view.php', array('id'=>$cm->id, 'pageid'=>$result->newpageid));
-
-if ($lesson->review && !$result->correctanswer && !$result->noanswer && !$result->isessayquestion && !$result->maxattemptsreached) {
-    // If both the "Yes, I'd like to try again" and "No, I just want to go on  to the next question" point to the same
-    // page then don't show the "No, I just want to go on to the next question" button. It's confusing.
-    if ($page->id != $result->newpageid) {
-        // Button to continue the lesson (the page to go is configured by the teacher).
-        echo $OUTPUT->single_button($url, get_string('reviewquestioncontinue', 'lesson'));
-    }
+if (!empty($appearancecontent)) {
+    echo $appearancecontent;
 } else {
-    // Normal continue button
-    echo $OUTPUT->single_button($url, get_string('continue', 'lesson'));
+    // Classic continue page rendering.
+    // This calculates and prints the ongoing score message
+    if ($lesson->ongoing && !$reviewmode) {
+        echo $lessonoutput->ongoing_score($lesson);
+    }
+    if (!$reviewmode) {
+        echo format_text($result->feedback, FORMAT_MOODLE, array('context' => $context, 'noclean' => true));
+    }
+
+    // User is modifying attempts - save button and some instructions
+    if (isset($USER->modattempts[$lesson->id])) {
+        $content = $OUTPUT->box(get_string("gotoendoflesson", "lesson"), 'center');
+        $content .= $OUTPUT->box(get_string("or", "lesson"), 'center');
+        $content .= $OUTPUT->box(get_string("continuetonextpage", "lesson"), 'center');
+        $url = new moodle_url('/mod/lesson/view.php', array('id' => $cm->id, 'pageid' => LESSON_EOL));
+        echo $content . $OUTPUT->single_button($url, get_string('finish', 'lesson'));
+    }
+
+    // Review button back
+    if (!$result->correctanswer && !$result->noanswer && !$result->isessayquestion && !$reviewmode && $lesson->review && !$result->maxattemptsreached) {
+        $url = new moodle_url('/mod/lesson/view.php', array('id' => $cm->id, 'pageid' => $page->id));
+        echo $OUTPUT->single_button($url, get_string('reviewquestionback', 'lesson'));
+    }
+
+    $url = new moodle_url('/mod/lesson/view.php', array('id'=>$cm->id, 'pageid'=>$result->newpageid));
+
+    if ($lesson->review && !$result->correctanswer && !$result->noanswer && !$result->isessayquestion && !$result->maxattemptsreached) {
+        // If both the "Yes, I'd like to try again" and "No, I just want to go on  to the next question" point to the same
+        // page then don't show the "No, I just want to go on to the next question" button. It's confusing.
+        if ($page->id != $result->newpageid) {
+            // Button to continue the lesson (the page to go is configured by the teacher).
+            echo $OUTPUT->single_button($url, get_string('reviewquestioncontinue', 'lesson'));
+        }
+    } else {
+        // Normal continue button
+        echo $OUTPUT->single_button($url, get_string('continue', 'lesson'));
+    }
 }
 
 echo $lessonoutput->footer();

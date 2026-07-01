@@ -254,7 +254,10 @@ if ($pageid != LESSON_EOL) {
         echo '<a name="maincontent" id="maincontent" title="' . get_string('anchortitle', 'lesson') . '"></a>';
     }
     echo $lessoncontent;
-    echo $lessonoutput->progress_bar($lesson);
+    // Only render progress bar here if no appearance subplugin is active (it renders its own).
+    if (!\mod_lesson\local\controller::get_appearance_instance($lesson)) {
+        echo $lessonoutput->progress_bar($lesson);
+    }
     echo $lessonoutput->footer();
 
 } else {

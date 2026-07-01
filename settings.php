@@ -190,6 +190,13 @@ $ADMIN->add('modlessonfolder', $settings);
 // Tell core we already added the settings structure.
 $settings = null;
 
+$ADMIN->add('modlessonfolder', new admin_externalpage(
+    'mod_lesson_managedesigns',
+    new lang_string('manageappearancedesigns', 'lesson'),
+    new moodle_url('/mod/lesson/appearance/manage.php'),
+    'mod/lesson:manageappearancedesigns'
+));
+
 $ADMIN->add('modlessonfolder', new admin_category('lessonpagetypeplugins',
     new lang_string('pagetypeplugins', 'lesson'), !$module->is_enabled()));
 

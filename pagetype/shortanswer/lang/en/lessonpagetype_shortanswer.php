@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['shortanswer'] = 'Short answer';
 $string['pluginname'] = 'Short answer';
 $string['addshortanswer'] = 'Create a Short answer question page';
 $string['editshortanswer'] = 'Editing a Short answer question page';

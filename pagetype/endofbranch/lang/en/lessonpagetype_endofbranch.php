@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['endofbranch'] = 'End of branch';
 $string['pluginname'] = 'End of branch';
 $string['addanendofbranch'] = 'Add an end of branch';
 $string['editendofbranch'] = 'Editing an end of branch page';

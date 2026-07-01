@@ -139,6 +139,66 @@ class lesson_page_type_wordsgame extends lesson_page {
         return $mform->display();
     }
 
+    public function get_qtype_content($renderer, $attempt): string {
+        global $CFG, $PAGE;
+
+        $allanswers = $this->get_answers();
+
+        // Skip first 2 answers (control answers), remaining are words.
+        $wordanswers = array_slice($allanswers, 2);
+
+        $words = [];
+        foreach ($wordanswers as $wa) {
+            $word = trim($wa->answer);
+            if ($word !== '') {
+                $words[] = [
+                    'word' => $word,
+                    'clue' => trim($wa->response),
+                ];
+            }
+        }
+
+        // Randomly pick game type.
+        $gametype = random_int(0, 1) ? 'crossword' : 'wordsearch';
+
+        if ($gametype === 'wordsearch') {
+            $generator = new \lessonpagetype_wordsgame\wordsearch_generator(array_column($words, 'word'));
+            $gamedata = $generator->generate();
+            $cluebyword = [];
+            foreach ($words as $w) {
+                $cluebyword[\core_text::strtoupper(trim($w['word']))] = $w['clue'];
+            }
+            foreach ($gamedata['words'] as &$pw) {
+                $upper = \core_text::strtoupper($pw->term);
+                $pw->clue = isset($cluebyword[$upper]) ? $cluebyword[$upper] : $pw->term;
+            }
+            unset($pw);
+        } else {
+            $generator = new \lessonpagetype_wordsgame\crossword_generator($words);
+            $gamedata = $generator->generate();
+        }
+
+        $action = $CFG->wwwroot . '/mod/lesson/continue.php';
+        $params = [
+            'contents' => '',
+            'lessonid' => $this->lesson->id,
+            'gametype' => $gametype,
+            'gamedata' => $gamedata,
+        ];
+        $mform = new lesson_display_answer_form_wordsgame($action, $params);
+
+        $data = new stdClass;
+        $data->id = $PAGE->cm->id;
+        $data->pageid = $this->properties->id;
+        $mform->set_data($data);
+
+        ob_start();
+        $mform->display();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
     public function check_answer() {
         global $CFG, $PAGE;
 

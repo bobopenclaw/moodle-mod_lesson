@@ -100,6 +100,10 @@ class mod_lesson_mod_form extends moodleform_mod {
         // Appearance.
         $mform->addElement('header', 'appearancehdr', get_string('appearance'));
 
+        $appearanceoptions = \mod_lesson\local\controller::get_appearance_designs();
+        $mform->addElement('select', 'appearance', get_string('appearancedesign', 'lesson'), $appearanceoptions);
+        $mform->setDefault('appearance', '');
+
         $filemanageroptions = array();
         $filemanageroptions['filetypes'] = '*';
         $filemanageroptions['maxbytes'] = $this->course->maxbytes;

@@ -1,0 +1,168 @@
+/* Scene appearance styles for lesson pages. */
+
+.lessonappearance-scene {
+    position: relative;
+    min-height: 500px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+/* Background layer. */
+.lessonappearance-scene .scene-background {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+/* Content overlay on top of background. */
+.lessonappearance-scene .scene-overlay {
+    position: relative;
+    z-index: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+}
+
+/* Progress bar. */
+.lessonappearance-scene .scene-progress {
+    margin-bottom: 0.5rem;
+}
+
+/* Top section: character + balloon + flag. */
+.lessonappearance-scene .scene-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex: 1;
+}
+
+/* Character: top-left. */
+.lessonappearance-scene .scene-character {
+    flex-shrink: 0;
+    width: 150px;
+}
+
+.lessonappearance-scene .scene-character img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Content balloon next to character. */
+.lessonappearance-scene .scene-balloon {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    color: var(--scene-color-default, #333);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.lessonappearance-scene .scene-balloon h1,
+.lessonappearance-scene .scene-balloon h2,
+.lessonappearance-scene .scene-balloon h3,
+.lessonappearance-scene .scene-balloon h4,
+.lessonappearance-scene .scene-balloon h5,
+.lessonappearance-scene .scene-balloon h6 {
+    color: var(--scene-color-primary, #3a5a8c);
+}
+
+.lessonappearance-scene .scene-balloon a {
+    color: var(--scene-color-secondary, #6c757d);
+}
+
+/* Flag: top-right corner. */
+.lessonappearance-scene .scene-flag {
+    flex-shrink: 0;
+    width: 80px;
+}
+
+.lessonappearance-scene .scene-flag img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Question type container below the top section. */
+.lessonappearance-scene .scene-qtype {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+    color: var(--scene-color-default, #333);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lessonappearance-scene .scene-qtype label {
+    color: var(--scene-color-default, #333);
+}
+
+/* Sprite image. */
+.lessonappearance-scene .scene-sprite {
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.lessonappearance-scene .scene-sprite img {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Feedback images (good/bad). */
+.lessonappearance-scene .scene-feedback {
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.lessonappearance-scene .scene-feedback img {
+    max-width: 120px;
+    height: auto;
+}
+
+.lessonappearance-scene .scene-good img {
+    filter: drop-shadow(0 0 6px var(--scene-color-good, #28a745));
+}
+
+.lessonappearance-scene .scene-bad img {
+    filter: drop-shadow(0 0 6px var(--scene-color-bad, #dc3545));
+}
+
+/* Navigation buttons. */
+.lessonappearance-scene .scene-navigation {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.lessonappearance-scene .scene-navigation .btn-primary {
+    background-color: var(--scene-color-primary, #3a5a8c);
+    border-color: var(--scene-color-primary, #3a5a8c);
+}
+
+.lessonappearance-scene .scene-navigation .btn-secondary {
+    background-color: var(--scene-color-secondary, #6c757d);
+    border-color: var(--scene-color-secondary, #6c757d);
+}
+
+/* Responsive adjustments. */
+@media (max-width: 576px) {
+    .lessonappearance-scene .scene-top {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .lessonappearance-scene .scene-character {
+        width: 100px;
+    }
+
+    .lessonappearance-scene .scene-flag {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 50px;
+    }
+}

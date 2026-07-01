@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['endofcluster'] = 'End of cluster';
 $string['pluginname'] = 'End of cluster';
 $string['addendofcluster'] = 'Add an end of cluster';
 $string['editendofcluster'] = 'Editing an end of cluster page';

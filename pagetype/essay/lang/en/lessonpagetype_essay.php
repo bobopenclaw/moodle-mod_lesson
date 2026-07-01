@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['essay'] = 'Essay';
 $string['pluginname'] = 'Essay';
 $string['addessay'] = 'Create an Essay question page';
 $string['editessay'] = 'Editing an Essay question page';

@@ -667,7 +667,7 @@ function lesson_process_group_deleted_in_course($courseid, $groupid = null) {
  */
 function lesson_get_overview_report_table_and_data(lesson $lesson, $currentgroup) {
     global $DB, $CFG, $OUTPUT;
-    require_once($CFG->dirroot . '/mod/lesson/pagetypes/branchtable.php');
+    require_once($CFG->dirroot . '/mod/lesson/pagetype/branchtable/pagetype.php');
 
     $context = $lesson->context;
     $cm = $lesson->cm;
@@ -3378,7 +3378,15 @@ class lesson extends lesson_base {
             } else {
                 $attempt = false;
             }
-            $lessoncontent = $lessonoutput->display_page($this, $page, $attempt);
+
+            // Use the appearance subplugin renderer if a design is selected, otherwise use the classic view.
+            $appearanceinstance = \mod_lesson\local\controller::get_appearance_instance($this);
+            if ($appearanceinstance) {
+                $progressbar = $lessonoutput->progress_bar($this);
+                $lessoncontent = $appearanceinstance->render($this, $page, $lessonoutput, $attempt, $progressbar);
+            } else {
+                $lessoncontent = $lessonoutput->display_page($this, $page, $attempt);
+            }
         } else {
             require_once($CFG->dirroot . '/mod/lesson/view_form.php');
             $data = new stdClass;
@@ -3948,6 +3956,51 @@ abstract class lesson_page extends lesson_base {
      * @return string
      */
     abstract public function display($renderer, $attempt);
+
+    /**
+     * Returns the descriptive content of the page (title + contents) as HTML.
+     *
+     * Subclasses can override this to customize the content rendering.
+     *
+     * @param object $renderer The lesson renderer.
+     * @return string HTML content.
+     */
+    public function get_page_content($renderer): string {
+        global $PAGE;
+
+        $output = '';
+        $headinglevel = $PAGE->activityheader->get_heading_level();
+        $output .= $renderer->heading(format_string($this->properties->title), $headinglevel);
+        $output .= $renderer->box($this->get_contents(), 'contents');
+        return $output;
+    }
+
+    /**
+     * Returns the question type / interaction content as HTML.
+     *
+     * For question pages, this is the answer form. For branch tables, this is empty
+     * (branches use navigation_buttons). For pages without answers, returns empty.
+     *
+     * @param object $renderer The lesson renderer.
+     * @param object|false $attempt The user's previous attempt, or false.
+     * @return string HTML content.
+     */
+    public function get_qtype_content($renderer, $attempt): string {
+        return '';
+    }
+
+    /**
+     * Returns the navigation buttons HTML for the page.
+     *
+     * This is primarily used by branch table pages. Question pages include
+     * their submit button within the qtype_content form.
+     *
+     * @param object $renderer The lesson renderer.
+     * @return string HTML content.
+     */
+    public function get_navigation_buttons($renderer): string {
+        return '';
+    }
 
     /**
      * Creates a new lesson_page within the database and returns the correct pagetype
