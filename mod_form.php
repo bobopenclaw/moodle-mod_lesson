@@ -100,8 +100,39 @@ class mod_lesson_mod_form extends moodleform_mod {
         // Appearance.
         $mform->addElement('header', 'appearancehdr', get_string('appearance'));
 
-        $appearanceoptions = \mod_lesson\local\controller::get_appearance_designs();
-        $mform->addElement('select', 'appearance', get_string('appearancedesign', 'lesson'), $appearanceoptions);
+        $appearanceoptions = [];
+        foreach (\mod_lesson\local\controller::get_appearance_design_tiles() as $tile) {
+            $tilecontent = html_writer::start_div('lesson-appearance-tile');
+            if ($tile->previewurl !== '') {
+                $tilecontent .= html_writer::img($tile->previewurl, '', ['class' => 'lesson-appearance-tile-preview']);
+            } else {
+                $tilecontent .= html_writer::div(
+                    get_string('nopreviewavailable', 'lesson'),
+                    'lesson-appearance-tile-preview lesson-appearance-tile-preview-empty'
+                );
+            }
+            $tilecontent .= html_writer::div($tile->name, 'lesson-appearance-tile-name');
+            $tilecontent .= html_writer::div($tile->typename, 'lesson-appearance-tile-type');
+            $tilecontent .= html_writer::end_div();
+
+            $appearanceoptions[] = $mform->createElement(
+                'radio',
+                'appearance',
+                '',
+                $tilecontent,
+                $tile->value,
+                ['class' => 'lesson-appearance-radio']
+            );
+        }
+        $mform->addGroup(
+            $appearanceoptions,
+            'appearancechoices',
+            get_string('appearancedesign', 'lesson'),
+            '',
+            false
+        );
+        $mform->addHelpButton('appearancechoices', 'appearancedesign', 'lesson');
+        $mform->setType('appearance', PARAM_TEXT);
         $mform->setDefault('appearance', '');
 
         $filemanageroptions = array();

@@ -1,0 +1,40 @@
+.lesson-appearance-tile {
+    border: 1px solid #d8dee6;
+    border-radius: .5rem;
+    display: inline-grid;
+    gap: .4rem;
+    margin: .25rem .75rem .75rem 0;
+    min-height: 9rem;
+    padding: .6rem;
+    vertical-align: top;
+    width: 12rem;
+}
+
+.lesson-appearance-radio:checked + .lesson-appearance-tile,
+label:has(.lesson-appearance-radio:checked) .lesson-appearance-tile {
+    border-color: #0f6cbf;
+    box-shadow: 0 0 0 .15rem rgba(15, 108, 191, .16);
+}
+
+.lesson-appearance-tile-preview {
+    align-items: center;
+    aspect-ratio: 16 / 9;
+    background: #f5f7fa;
+    border-radius: .35rem;
+    color: #5c6470;
+    display: flex;
+    font-size: .85rem;
+    justify-content: center;
+    object-fit: cover;
+    width: 100%;
+}
+
+.lesson-appearance-tile-name {
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.lesson-appearance-tile-type {
+    color: #5c6470;
+    font-size: .82rem;
+}
